@@ -383,7 +383,40 @@ namespace PseudocodeInterpreter.Tests
 			Assert.Equal(expectedTokens, tokenList);
 		}
 
-		[Fact]
+        [Fact]
+        public void Test_Lexer_TokenStreamEn5()
+        {
+			var langManager = new LanguageManager();
+			var expectedTokens = new List<Token>
+			{
+				new Token(TokenType.Identifier, "having"),
+				new Token(TokenType.NL, "\n"),
+				new Token(TokenType.Identifier, "fun"),
+				new Token(TokenType.XOR, "^"),
+				new Token(TokenType.XOR, "^"),
+				new Token(TokenType.BitAnd, "&"),
+				new Token(TokenType.BitAnd, "&"),
+				new Token(TokenType.Pow, "**"),
+				new Token(TokenType.Mult, "*"),
+				new Token(TokenType.RPar, ")"),
+				new Token(TokenType.RPar, ")"),
+			};
+
+			const string text = "having \nfun ^^ && ***))";
+			var lexer = new Lexer(text, langManager);
+
+			var tokenList = new List<Token>();
+
+			do
+			{
+				tokenList.Add(lexer.GetNextToken());
+			} while (tokenList.Last().Type != TokenType.EOF);
+
+			Assert.Equal(expectedTokens, tokenList);
+		}
+
+
+        [Fact]
 		public void Test_Lexer_TokenStreamRo()
 		{
 			var langManager = new LanguageManager("ro");
